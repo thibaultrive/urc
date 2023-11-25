@@ -22,5 +22,9 @@
   },
   "include": [
     "src"
+<<<<<<< HEAD
 , "cors-server.js"  ]
+=======
+  ]
+>>>>>>> origin/main
 }

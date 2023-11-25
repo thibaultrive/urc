@@ -16,7 +16,11 @@ CREATE TABLE rooms (
 );
 
 
+<<<<<<< HEAD
 insert into users (username, password, email, created_on, external_id) values ('test', 'gcrjEewWyAuYskG3dd6gFTqsC6/SKRsbTZ+g1XHDO10=	', 'test@univ-brest.fr', now(), 'ac7a25a9-bcc5-4fba-8a3d-d42acda26949');
+=======
+insert into users (username, password, email, created_on, external_id) values ('test', 'gcrjEewWyAuYskG3dd6gFTqsC6/SKRsbTZ+g1XHDO10=', 'test@univ-brest.fr', now(), 'ac7a25a9-bcc5-4fba-8a3d-d42acda26949');
+>>>>>>> origin/main
 
 insert into rooms (name, created_on, created_by) values ('General', now(), 4);
 insert into rooms (name, created_on, created_by) values ('News', now(), 4);

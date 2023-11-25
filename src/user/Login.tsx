@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 import React from 'react';
+=======
+>>>>>>> origin/main
 import {useState} from "react";
 import {loginUser} from "./loginApi";
 import {Session} from "../model/common";
 import {CustomError} from "../model/CustomError";
+<<<<<<< HEAD
 import { Input } from "@nextui-org/input";
 import { EyeFilledIcon } from "../pages/component/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "../pages/component/EyeSlashFilledIcon";
@@ -11,15 +15,21 @@ import { useDispatch } from 'react-redux';
 import { Form } from 'react-router-dom';
 import { setToken } from '../authSlice';
 
+=======
+>>>>>>> origin/main
 
 export function Login() {
 
     const [error, setError] = useState({} as CustomError);
     const [session, setSession] = useState({} as Session);
+<<<<<<< HEAD
     const dispach = useDispatch();
 
     const [isVisible, setIsVisible] = React.useState(false);
     const toggleVisibility = () => setIsVisible(!isVisible);
+=======
+
+>>>>>>> origin/main
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const form = event.currentTarget;
@@ -28,7 +38,10 @@ export function Login() {
             (result: Session) => {
                 console.log(result);
                 setSession(result);
+<<<<<<< HEAD
                 dispach(setToken(result.token));
+=======
+>>>>>>> origin/main
                 form.reset();
                 setError(new CustomError(""));
             }, (loginError: CustomError) => {
@@ -39,6 +52,7 @@ export function Login() {
     };
 
     return(<>
+<<<<<<< HEAD
       <div className="flex items-center justify-center min-h-screen">
       <div className="bg-white p-8 shadow-md rounded-md w-96">
       <br/>  <br/> <br/>  <br/> <br/>  <br/> 
@@ -67,6 +81,14 @@ export function Login() {
       </div>
     </div>
     { session.token &&
+=======
+        <form onSubmit={handleSubmit}>
+            <input name="login" placeholder="login"/><br/>
+            <input name="password" placeholder="password"/><br/>
+            <button type="submit">connexion</button>
+        </form>
+            { session.token &&
+>>>>>>> origin/main
                 <span>{session.username} : {session.token}</span>
             }
             { error.message &&

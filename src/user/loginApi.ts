@@ -1,9 +1,13 @@
 import {Session, SessionCallback, ErrorCallback, User} from "../model/common";
 import {CustomError} from "../model/CustomError";
 
+<<<<<<< HEAD
 
 export function loginUser(user: User, onResult: SessionCallback, onError: ErrorCallback) {
   
+=======
+export function loginUser(user: User, onResult: SessionCallback, onError: ErrorCallback) {
+>>>>>>> origin/main
     fetch("/api/login",
         {
             method: "POST", // ou 'PUT'
@@ -19,8 +23,11 @@ export function loginUser(user: User, onResult: SessionCallback, onError: ErrorC
                 sessionStorage.setItem('externalId', session.externalId);
                 sessionStorage.setItem('username', session.username || "");
                 onResult(session)
+<<<<<<< HEAD
                
 
+=======
+>>>>>>> origin/main
             } else {
                 const error = await response.json() as CustomError;
                 onError(error);
