@@ -11,7 +11,6 @@ export default async function handler(request) {
         const {username, password} = await request.json();
         const hash = await crypto.subtle.digest('SHA-256', stringToArrayBuffer(username + password));
         const hashed64 = arrayBufferToBase64(hash);
-
         const client = await db.connect();
         const {rowCount, rows} = await client.sql`select * from users where username = ${username} and password = ${hashed64}`;
         if (rowCount !== 1) {
