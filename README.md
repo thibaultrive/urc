@@ -1,6 +1,7 @@
 # UBO Relay Chat
 
 ## Objectifs
+
 Créer une application de messagerie type IRC / WhatApp : [démo](https://urc.vercel.app/)
 
 TP réalisable en binômes ; mais dans ce cas, je veux un accès au repos Git pour vérifier la contribution équitable de chacun.
@@ -8,6 +9,15 @@ TP réalisable en binômes ; mais dans ce cas, je veux un accès au repos Git po
 Le but de ce TP est de fournir un cadre permettant l'exploration et l'expérimentation.
 A vous de vous plonger dans la documentation des différents outils utilisés (Redis, Node.js, Crypto, Push API) pour comprendre leur fonctionnement et les prendre en main.
 La poursuite d'idées personnelles et l'ajout de fonctionnalités additionnelles sont vivement encouragées.
+
+
+## Intro
+
+Pour réaliser ce TP, nous allons utiliser la plateforme [vercel](https://vercel.com/dashboard) qui propose différents supports de stockage de données : 
+
+ - Une base de données relationnelle de type PostgreSQL pour stocker nos utilisateurs
+ - Un cache de type Redis pour gérer les sessions utilisateurs (vérifier qu'ils se sont bien connectés)
+ - Un stockage fichier de type bucket s3, afin d'héberger les images (et GIF) envoyés dans les conversations
 
 
 ## Setup
@@ -57,12 +67,23 @@ instanciés à la demande, sans avoir à gérer de serveur Web.
 ## La gestion des utilisateurs
 
 ### La connexion
+
 Le squelette d'application fourni contient déjà un formulaire de connexion basique.
 
 Le service `/api/login` permet de récupérer un token de session qu'on stocke en session storage, 
 de sorte à ce qu'il soit persisté lors d'un refresh du site. <br/>
 Il est présent [ici](api/login.js).<br/>
 Avant de passer à la suite, lire la note sur la [gestion du mot de passe](#mdp)
+
+<a id="session"></a>
+Contrairement à ce que vous avez peut-être déjà rencontré sur d'autres framework, ici la session utilisateur n'est pas gérée comme par magie
+via des cookies, JSESSIONID ou autre.<br/>
+Nous allons utiliser le schéma [Bearer Authentication](https://swagger.io/docs/specification/v3_0/authentication/bearer-authentication/) : 
+ce sera à vous de gérer la persistance, au niveau du navigateur, du token de session récupéré lors de la connexion ; et d'envoyer ce token
+en header de chaque requête, sous la forme `Authorization: Bearer <token>`, afin de pouvoir valider la connexion de l'utilisateur au niveau
+des services API.
+
+<p>&nbsp;</p>
 
 Déroulé du service login : 
 
@@ -119,6 +140,7 @@ ou le connecter automatiquement pour qu'il puisse accéder directement à la mes
 Le service [users.js](api/users.js) permet de vérifier que l'utilisateur est bien connecté et de récupérer la liste des utilisateurs existants (avec seulement leurs données publiques).
 
  - Utiliser ce service pour récupérer la liste des utilisateurs et l'enregistrer dans le store
+ - Si vous obtenez une erreur 401 "UNAUTHORIZED", c'est que vous avez oublié de [mettre le token de session en header](#session).
  - Afficher la liste avec le nom de chaque utilisateur et sa date de dernière connexion 
 (filtrer pour ne pas afficher dans la liste l'utilisateur connecté 😁)
  - Lors de la sélection d'un utilisateur, modifier l'URL (par exemple `/messages/user/{user_id}`),
@@ -316,6 +338,12 @@ A chaque connexion, on vient re-calculer le hash du mot de passe pour le compare
 
 Par simplicité, on utilisera ici la fonction `SHA-256` qui est nativement supportée dans l'environnement JS ;
 mais celle-ci n'est plus considérée comme sécurisée et une alternative plus robuste tel que `bcrypt` serait normalement à privilégier.
+
+⚠️ Lors de la connexion, il peut être tentant de calculer le hash du mot de passe au niveau du navigateur, avant de l'envoyer au service de connexion,
+afin qu'il ne soit pas en clair dans la requête.<br/>
+Il s'agit d'une **très** mauvaise idée !
+Un attaquant qui aurait réussi à récupérer le contenu de la base de données pourrait alors se connecter à la place de n'importe quel utilisateur
+en envoyant directement le hash, sans avoir besoin de connaitre le vrai mot de passe.
 
 2ème bonne pratique, on ne hash jamais un mot de passe seul. La concaténation avec un aléa unique
 (dans le TP, il s'agit du username) permet de se prémunir des attaques de type [Rainbow table](https://fr.wikipedia.org/wiki/Rainbow_table).
