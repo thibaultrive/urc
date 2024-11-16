@@ -1,18 +1,25 @@
 import './App.css';
-import {Login} from "./user/Login";
+import { Login } from "./user/Login";
+import { SignUp } from "./user/SignUp";
+import { MessagingPage } from './user/MessagingPage';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import store from './store';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-function App() {
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import store from './store';
 
+
+function App() {
   return (
-      <BrowserRouter>
-        <Provider store={store}>
-          <Login/>
+    <BrowserRouter>
+      <Provider store={store}>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signUp" element={<SignUp />} />
+          <Route path="/messaging" element={<MessagingPage />} />
+        </Routes>
       </Provider>
-      </BrowserRouter>
+    </BrowserRouter>
   );
 }
 

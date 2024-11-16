@@ -150,7 +150,7 @@ export function Login() {
 
         {/* Link to sign up if the user doesn't have an account */}
         <Typography
-          endDecorator={<Link href="/sign-up">Sign up</Link>}
+          endDecorator={<Link href="/signUp">Sign up</Link>}
           sx={{ fontSize: 'sm', alignSelf: 'center' }}
         >
           Don&apos;t have an account?

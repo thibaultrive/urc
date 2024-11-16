@@ -41,7 +41,7 @@ function ModeToggle() {
   );
 }
 
-export default function SignUp() {
+export function SignUp() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState({} as CustomError);
   const [loading, setLoading] = useState(false);

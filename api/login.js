@@ -30,7 +30,7 @@ export default async function handler(request) {
             const userInfo = {};
             userInfo[user.id] = user;
             await redis.hset("users", userInfo);
-
+            console.log("the user"+ user.username +"is connected")
             return new Response(JSON.stringify({token: token, username: username, externalId: rows[0].external_id, id: rows[0].user_id}), {
                 status: 200,
                 headers: {'content-type': 'application/json'},

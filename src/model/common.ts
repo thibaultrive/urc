@@ -1,6 +1,6 @@
 import {CustomError} from "./CustomError";
 
-export const AUTHENT_HEADER = "Authentication";
+export const AUTHENT_HEADER = "Authorization";
 export const BEARER = "Bearer ";
 
 export interface User {
@@ -12,12 +12,27 @@ export interface User {
     external_id?: string;
 }
 
+export interface Room {
+    room_id: number;
+    name: string;
+    created_on: string;
+  }
+
+
 export interface Session {
     token: string;
     username?: string;
     id?: number;
     externalId: string;
 }
+
+  
+export interface UsersState {
+    users: User[];
+    rooms: Room[];
+    selectedUser: User | null;
+  }
+  
 
 
 export interface EmptyCallback {
