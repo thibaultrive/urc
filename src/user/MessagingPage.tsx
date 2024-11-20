@@ -36,19 +36,19 @@ export default function MessagingPage() {
             },
           }
         );
-  
+
         if (!response.ok) throw new Error(`Failed to fetch messages: ${response.statusText}`);
-  
+
         const data = await response.json();
         console.log("Fetched messages:", data);
-        dispatch(setMessages(data || []));
+        dispatch(setMessages(data.messages || []));
       } catch (error) {
         console.error('Error fetching messages:', error);
       } finally {
         setLoadingMessages(false);
       }
     };
-  
+
     fetchMessages();
   }, [selectedUser, token, dispatch, navigate]);
 
@@ -60,16 +60,16 @@ export default function MessagingPage() {
       console.error('Message content or recipient is missing.');
       return;
     }
-  
+
     setSending(true);
-  
+
     const payload = {
       sender_id: loggedUserId,
       receiver_id: selectedUser.user_id,
       receiver_type: 'user',
       content: newMessage.trim(),
     };
-  
+
     try {
       const response = await fetch('/api/envoyerMessage', {
         method: 'POST',
@@ -79,15 +79,16 @@ export default function MessagingPage() {
         },
         body: JSON.stringify(payload),
       });
-  
+
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(errorText || 'Unknown error occurred');
       }
-  
+
       const { data } = await response.json();
+      console.log("Message sent:", data);
       dispatch(addMessage(data)); // Vérifie que `data` contient bien le message attendu
-      setNewMessage('');
+      setNewMessage('');  // Réinitialise le champ de message après envoi
     } catch (err) {
       console.error('Error sending message:', err);
       alert('Failed to send the message. Please try again.');

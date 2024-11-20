@@ -23,11 +23,10 @@ const authSlice = createSlice({
     loginSuccess(state, action: PayloadAction<{ token: string; username: string; user_id: string }>) {
       state.token = action.payload.token;
       state.username = action.payload.username;
-      state.user_id = action.payload.user_id;  // Ajouter l'ID utilisateur
+      state.user_id = action.payload.user_id;
       state.isAuthenticated = true;
       state.error = null;
-    }
-    ,
+    },
     loginFailure(state: AuthState, action: PayloadAction<{ message: string }>) {
       state.error = action.payload.message;
       state.isAuthenticated = false;
@@ -35,12 +34,18 @@ const authSlice = createSlice({
     logout(state: AuthState) {
       state.token = null;
       state.username = null;
+      state.user_id = null; // Réinitialise l'ID utilisateur
       state.isAuthenticated = false;
       state.error = null;
+    },
+    syncAuthState(state, action: PayloadAction<{ token: string; username: string; user_id: string }>) {
+      state.token = action.payload.token;
+      state.username = action.payload.username;
+      state.user_id = action.payload.user_id;
+      state.isAuthenticated = true;
     },
   },
 });
 
-
-export const { loginSuccess, loginFailure, logout } = authSlice.actions;
+export const { loginSuccess, loginFailure, logout, syncAuthState } = authSlice.actions;
 export default authSlice.reducer;

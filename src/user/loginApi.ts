@@ -21,7 +21,7 @@ export function loginUser(user: User, onResult: SessionCallback, onError: ErrorC
             sessionStorage.setItem('externalId', session.externalId);
             sessionStorage.setItem('username', session.username || "");
             sessionStorage.setItem('user_id', session.id ? session.id.toString() : '');
-
+ 
             // Passe l'objet session avec user_id dans onResult
             onResult(session);
         } else {

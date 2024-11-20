@@ -8,13 +8,14 @@ interface MessageListProps {
   messages: Message[] | undefined;
 }
 
+
 export function MessageList({ messages }: MessageListProps) {
   // Récupère l'ID de l'utilisateur connecté
-  const { user_id: loggedUserId } = useSelector((state: RootState) => state.auth);
+  
+  const loggedUserId = sessionStorage.getItem('user_id');
 
   return (
     <Box sx={{ flex: 1, overflowY: 'auto', padding: 2 }}>
-      {/* Vérification des messages */}
       {messages && messages.length > 0 ? (
         messages.map((message) => {
           const isSentByLoggedUser = String(message.sender_id) === String(loggedUserId);
@@ -23,20 +24,23 @@ export function MessageList({ messages }: MessageListProps) {
             <Box
               key={message.message_id}
               sx={{
+                display: 'flex',
+                justifyContent: isSentByLoggedUser ? 'flex-end' : 'flex-start',
                 marginBottom: 2,
-                padding: 1,
-                borderRadius: '8px',
-                backgroundColor: isSentByLoggedUser ? 'primary.200' : 'neutral.100',
-                alignSelf: isSentByLoggedUser ? 'flex-end' : 'flex-start',
-                maxWidth: '75%', // Limite la largeur des bulles de message
               }}
             >
-              <Typography
-                sx={{ wordWrap: 'break-word' }} // Permet de gérer les longs messages
-                aria-label={isSentByLoggedUser ? 'Message sent' : 'Message received'}
+              <Box
+                sx={{
+                  padding: 1,
+                  borderRadius: '12px',
+                  backgroundColor: isSentByLoggedUser ? 'primary.500' : 'neutral.200',
+                  color: isSentByLoggedUser ? 'white' : 'black',
+                  maxWidth: '75%', // Limite la largeur des bulles de message
+                  wordBreak: 'break-word',
+                }}
               >
-                {message.content}
-              </Typography>
+                <Typography>{message.content}</Typography>
+              </Box>
             </Box>
           );
         })

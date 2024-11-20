@@ -47,8 +47,7 @@ export default async function handler(request) {
             ORDER BY timestamp ASC;
         `;
 
-        console.log(`Requête SQL terminée. Nombre de messages trouvés : ${rowCount}`);
-        console.log("Messages retournés :", rows);
+
 
         // Retourne les résultats au frontend
         return new Response(

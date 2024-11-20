@@ -31,6 +31,7 @@ export default function Sidebar({ onUserSelect, onRoomSelect }: SidebarProps) {
       .then((response) => response.json())
       .then((data) => {
         if (Array.isArray(data)) {
+          console.log(loggedUserId);
           const filteredUsers = data.filter((user: User) => user.user_id.toString() !== loggedUserId);
           dispatch(setUsers(filteredUsers));
         } else {
