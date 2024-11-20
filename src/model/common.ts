@@ -31,8 +31,32 @@ export interface UsersState {
     users: User[];
     rooms: Room[];
     selectedUser: User | null;
+    selectedRoom: Room | null; // Add this line
   }
   
+
+  export interface Message {
+    message_id: number;
+    sender_id: number;
+    sender_name: string;
+    receiver_id: number;
+    receiver_type: string;
+    content: string;
+    timestamp: string;
+  }
+
+  export interface MessagesState {
+    selectedUser: User | null;
+    selectedRoom: null,  // Add selectedRoom here
+    messages: Message[];
+  }
+  
+  export const initialState: MessagesState = {
+    selectedUser: null,
+    selectedRoom: null,  // Add selectedRoom here
+    messages: [],
+  };
+
 
 
 export interface EmptyCallback {

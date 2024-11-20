@@ -1,20 +1,39 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { User, Message, Room } from "../model/common";
+
+interface MessagesState {
+  messages: Message[];
+  selectedUser: User | null;
+  selectedRoom: Room | null;
+}
+
+const initialState: MessagesState = {
+  messages: [],
+  selectedUser: null,
+  selectedRoom: null, // Added selectedRoom to the state
+};
 
 const messagesSlice = createSlice({
   name: 'messages',
-  initialState: {
-    selectedConversation: null, // La conversation actuellement sélectionnée
-    conversations: {}, // Toutes les conversations chargées
-  },
+  initialState,
   reducers: {
-    setSelectedConversation: (state, action) => {
-      state.selectedConversation = action.payload;
+    setSelectedUser: (state, action: PayloadAction<User | null>) => {
+      state.selectedUser = action.payload;
     },
-    setConversations: (state, action) => {
-      state.conversations = action.payload;
+    setSelectedRoom: (state, action: PayloadAction<Room | null>) => {
+      state.selectedRoom = action.payload;
+    },
+    setMessages: (state, action: PayloadAction<Message[]>) => {
+      state.messages = action.payload;
+    },
+    addMessage: (state, action: PayloadAction<Message>) => {
+      state.messages.push(action.payload);
     },
   },
 });
 
-export const { setSelectedConversation, setConversations } = messagesSlice.actions;
+// Exporting all actions, including setSelectedRoom
+export const { setSelectedUser, setSelectedRoom, setMessages, addMessage } = messagesSlice.actions;
+
+// Exporting the reducer
 export default messagesSlice.reducer;

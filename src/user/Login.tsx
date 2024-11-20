@@ -47,7 +47,7 @@ function ModeToggle() {
   }
 
 
-export function Login() {
+export default function Login() {
   const [error, setError] = useState<CustomError>({
     message: '',
     name: ''

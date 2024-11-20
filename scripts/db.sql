@@ -21,3 +21,16 @@ insert into users (username, password, email, created_on, external_id) values ('
 insert into rooms (name, created_on, created_by) values ('General', now(), 4);
 insert into rooms (name, created_on, created_by) values ('News', now(), 4);
 insert into rooms (name, created_on, created_by) values ('Random', now(), 4);
+
+
+CREATE TABLE messages (
+    message_id SERIAL PRIMARY KEY,
+    sender_id INTEGER NOT NULL,
+    sender_name TEXT NOT NULL,
+    receiver_id INTEGER NOT NULL,
+    receiver_TYPE TEXT NOT NULL,
+    content TEXT NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES users(user_id),
+    FOREIGN KEY (receiver_id) REFERENCES users(user_id)
+);
