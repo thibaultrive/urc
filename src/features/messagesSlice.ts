@@ -24,13 +24,20 @@ const messagesSlice = createSlice({
       state.selectedRoom = action.payload;
     },
     setMessages: (state, action: PayloadAction<Message[]>) => {
-      state.messages = action.payload;
+      state.messages = action.payload.map((message) => ({
+        ...message,
+        created_at: new Date(message.created_at).toLocaleString(), // Ajoute un formatage propre ici si besoin
+      }));
     },
     addMessage: (state, action: PayloadAction<Message>) => {
-      state.messages.push(action.payload);
+      state.messages.push({
+        ...action.payload,
+        created_at: new Date(action.payload.created_at).toLocaleString(), // Ajoute un formatage
+      });
     },
   },
 });
+
 
 // Exporting all actions, including setSelectedRoom
 export const { setSelectedUser, setSelectedRoom, setMessages, addMessage } = messagesSlice.actions;

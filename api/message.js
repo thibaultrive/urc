@@ -40,12 +40,13 @@ export default async function handler(request) {
                 receiver_id, 
                 sender_name,
                 content, 
-                TO_CHAR(timestamp, 'DD/MM/YYYY HH24:MI') AS formatted_timestamp
+                TO_CHAR(created_at, 'DD/MM/YYYY HH24:MI') AS created_at
             FROM messages
             WHERE (CAST(sender_id AS TEXT) = ${String(connected.id)} AND CAST(receiver_id AS TEXT) = ${String(receiver_id)})
-               OR (CAST(sender_id AS TEXT) = ${String(receiver_id)} AND CAST(receiver_id AS TEXT) = ${String(connected.id)})
-            ORDER BY timestamp ASC;
+            OR (CAST(sender_id AS TEXT) = ${String(receiver_id)} AND CAST(receiver_id AS TEXT) = ${String(connected.id)})
+            ORDER BY created_at ASC;
         `;
+    
 
 
 

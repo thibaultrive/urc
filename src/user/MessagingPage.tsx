@@ -6,7 +6,8 @@ import { RootState } from '../store';
 import { addMessage, setMessages, setSelectedUser } from '../features/messagesSlice';
 import Sidebar from './Sidebar';
 import { MessageList } from './MessageList';
-import { User } from '../model/common';
+import { Message, User } from '../model/common';
+import { format, parse } from 'date-fns';
 
 export default function MessagingPage() {
   const [newMessage, setNewMessage] = useState('');
@@ -20,12 +21,12 @@ export default function MessagingPage() {
   // Fetch messages
   useEffect(() => {
     if (!selectedUser) {
-      navigate('/messaging'); // Redirect to home if no user is selected
+      navigate('/messaging'); // Redirige si aucun utilisateur n'est sélectionné
       return;
     }
-
+  
     const fetchMessages = async () => {
-      setLoadingMessages(true);
+      setLoadingMessages(true); // Active le loader
       try {
         const response = await fetch(
           `/api/message?receiver_id=${selectedUser.user_id}&receiver_type=user`,
@@ -36,21 +37,42 @@ export default function MessagingPage() {
             },
           }
         );
-
-        if (!response.ok) throw new Error(`Failed to fetch messages: ${response.statusText}`);
-
+  
+        if (!response.ok) {
+          throw new Error(`Failed to fetch messages: ${response.statusText}`);
+        }
+  
         const data = await response.json();
         console.log("Fetched messages:", data);
-        dispatch(setMessages(data.messages || []));
+  
+        // Assurez-vous que les messages contiennent un timestamp bien formaté
+        const formattedMessages = data.messages.map((message: Message) => {
+          try {
+            // Parse la chaîne `created_at` (format connu "dd/MM/yyyy HH:mm")
+            const parsedDate = parse(message.created_at, 'dd/MM/yyyy HH:mm', new Date());
+    
+            // Si parsing réussi, formatte la date
+            return {
+              ...message,
+              created_at: format(parsedDate, 'MMMM dd, yyyy HH:mm'), // Exemple: "November 22, 2024 20:31"
+            };
+          } catch (err) {
+            console.error("Error parsing date:", err);
+            return message; // Retourne le message tel quel si le parsing échoue
+          }
+        });
+  
+        dispatch(setMessages(formattedMessages));
       } catch (error) {
         console.error('Error fetching messages:', error);
       } finally {
-        setLoadingMessages(false);
+        setLoadingMessages(false); // Désactive le loader
       }
     };
-
+  
     fetchMessages();
   }, [selectedUser, token, dispatch, navigate]);
+  
 
   // Send a new message
   const [sending, setSending] = useState(false);
