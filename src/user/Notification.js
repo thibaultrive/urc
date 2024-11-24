@@ -10,15 +10,15 @@ const beamsClient = new Client({
 });
 
 const Notifications = ({ children }) => {
-    useEffect(() => {
-        const initializePushNotifications = async () => {
-            const token = sessionStorage.getItem('token');
-const userExternalId = sessionStorage.getItem('externalId');
+        useEffect(() => {
+            const initializePushNotifications = async () => {
+                const token = sessionStorage.getItem('token');
+            const userExternalId = sessionStorage.getItem('externalId');
 
-if (!token || !userExternalId) {
-    console.error('Token or External ID is missing!');
-    return; // Sortir de la fonction si les données sont manquantes
-}
+    if (!token || !userExternalId) {
+        console.error('Token or External ID is missing!');
+        return; // Sortir de la fonction si les données sont manquantes
+    }
 
 
             const beamsTokenProvider = new TokenProvider({

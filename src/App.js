@@ -29,7 +29,7 @@ function App() {
 
 
   return (
-   // <Notifications> {/* Notifications doit envelopper toute l'application */}
+    //<Notifications> {/* Notifications doit envelopper toute l'application */}
     <BrowserRouter>
       <Provider store={store}>
         <Suspense fallback={<div>Loading...</div>}>
@@ -42,7 +42,7 @@ function App() {
         </Suspense>
       </Provider>
     </BrowserRouter>
-    //     </Notifications>
+        //</Notifications>
   );
 }
 

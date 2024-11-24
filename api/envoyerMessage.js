@@ -73,56 +73,70 @@ export default async (request) => {
             { status: 200, headers: { "Content-Type": "application/json" } }
         );
           
-        /*const sendPushNotification = async (externalIds, message, sender) => {
-            try {
-                await beamsClient.publishToUsers(externalIds, {
-                    web: {
-                        notification: {
-                            title: sender.username,
-                            body: message.content,
-                            icon: "https://www.univ-brest.fr/themes/custom/ubo_parent/favicon.ico",
-                        },
-                        data: {
-                            senderId: sender.id,
-                            receiver_Id: receiver_id,
-                            receiverType: receiver_type,
-                            messageId: message.message_id,
-                        },
-                    },
-                });
-                console.log('Notification sent');
-            } catch (error) {
-                console.error("Error sending notification:", error);
-            }
-        };
+        /*
+        // const beamsClient = new PushNotifications({
+        //     instanceId: '2382f17c-6b81-4d80-a56d-3e4f56018ecf',
+        //     secretKey: 'B49DB50EEF6255473EB6978A0CF10F0D5EE547BCB9295F807A6C1566A9D9E385',
+        // });
 
-        if (receiver_type === 'group') {
-            // Récupérer tous les utilisateurs, sauf l'expéditeur
-            const allUsersResult = await db.sql`
-                SELECT external_id 
-                FROM users 
-                WHERE user_id != ${user.id};
-            `;
+        // Fonction pour envoyer une notification push
+        // const sendPushNotification = async (externalIds, message, sender) => {
+        //     try {
+        //         await beamsClient.publishToUsers(externalIds, {
+        //             web: {
+        //                 notification: {
+        //                     title: sender.username,
+        //                     body: message.content,
+        //                     icon: "https://www.univ-brest.fr/themes/custom/ubo_parent/favicon.ico",
+        //                 },
+        //                 data: {
+        //                     senderId: sender.id,
+        //                     receiver_Id: receiver_id,
+        //                     receiverType: receiver_type,
+        //                     messageId: message.message_id,
+        //                 },
+        //             },
+        //         });
+        //         console.log('Notification sent successfully.');
+        //     } catch (error) {
+        //         console.error("Error sending notification:", error);
+        //     }
+        // };
 
-            if (allUsersResult.rowCount > 0) {
-                const externalIds = allUsersResult.rows.map(row => row.external_id);
-                await sendPushNotification(externalIds, savedMessage, user);
-            }
-        } else if (receiver_type === 'user') {
-            // Récupérer l'ID externe de l'utilisateur destinataire
-            const receiverResult = await db.sql`
-                SELECT external_id
-                FROM users
-                WHERE user_id = ${receiver_id};
-            `;
+        // // Gérer les notifications en fonction du type de destinataire
+        // if (receiver_type === 'group') {
+        //     // Récupérer tous les utilisateurs du groupe, sauf l'expéditeur
+        //     const allUsersResult = await db.sql`
+        //         SELECT external_id 
+        //         FROM users 
+        //         WHERE user_id != ${user.id};
+        //     `;
 
-            if (receiverResult.rowCount > 0) {
-                const receiverExternalId = receiverResult.rows[0].external_id;
-                await sendPushNotification([receiverExternalId], savedMessage, user);
-            } else {
-                return response.status(404).json({ error: "Receiver not found." });
-            }
-        }*/
+        //     if (allUsersResult.rowCount > 0) {
+        //         const externalIds = allUsersResult.rows.map(row => row.external_id);
+        //         await sendPushNotification(externalIds, savedMessage, user);
+        //     }
+        // } else if (receiver_type === 'user') {
+        //     // Récupérer l'ID externe du destinataire
+        //     const receiverExternalResult = await db.sql`
+        //         SELECT external_id
+        //         FROM users
+        //         WHERE user_id = ${receiver_id};
+        //     `;
+
+        //     if (receiverExternalResult.rowCount > 0) {
+        //         const receiverExternalId = receiverExternalResult.rows[0].external_id;
+        //         await sendPushNotification([receiverExternalId], savedMessage, user);
+        //     } else {
+        //         console.log("Receiver external ID not found.");
+        //         return new Response(
+        //             JSON.stringify({ error: "Receiver not found." }),
+        //             { status: 404, headers: { "Content-Type": "application/json" } }
+        //         );
+        //     }
+        // }
+
+         */
 
 
     } catch (error) {

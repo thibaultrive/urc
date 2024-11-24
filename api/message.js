@@ -1,4 +1,4 @@
-import { checkSession, unauthorizedResponse } from "../lib/session";
+import { checkSession, unauthorizedResponse } from "../lib/session.js";
 import { sql } from "@vercel/postgres";
 
 export const config = {
@@ -44,7 +44,7 @@ export default async function handler(request) {
                 TO_CHAR(created_at, 'DD/MM/YYYY HH24:MI') AS created_at
             FROM messages
             WHERE receiver_type = $1
-              AND receiver_id = $2
+              AND (receiver_id = $2 OR sender_id = $2)
         `;
 
         const params = [receiver_type, receiver_id];
