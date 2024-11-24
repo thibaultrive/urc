@@ -28,14 +28,20 @@ export default async (request) => {
                 { status: 400, headers: { "Content-Type": "application/json" } }
             );
         }
-
-        // Vérifier si le destinataire existe
-        const receiverResult = await db.sql`
+        let receiverResult =``;
+        if (receiver_type === 'user')
+            { receiverResult = await db.sql`
             SELECT user_id 
             FROM users 
-            WHERE user_id = ${receiver_id};
-        `;
+            WHERE user_id = ${receiver_id};`
+        ;}else{
+             receiverResult = await db.sql`
+            SELECT room_id 
+            FROM rooms 
+            WHERE room_id = ${receiver_id};`
+            }
 
+            console.log('sdnsqdklqsld '+ receiverResult);
         if (receiverResult.rowCount === 0) {
             console.log("Receiver not found.");
             return new Response(
@@ -59,11 +65,65 @@ export default async (request) => {
             );
         }
 
+
+
         console.log("Message saved:", result.rows[0]);
         return new Response(
             JSON.stringify({ data: result.rows[0] }),
             { status: 200, headers: { "Content-Type": "application/json" } }
         );
+          
+        /*const sendPushNotification = async (externalIds, message, sender) => {
+            try {
+                await beamsClient.publishToUsers(externalIds, {
+                    web: {
+                        notification: {
+                            title: sender.username,
+                            body: message.content,
+                            icon: "https://www.univ-brest.fr/themes/custom/ubo_parent/favicon.ico",
+                        },
+                        data: {
+                            senderId: sender.id,
+                            receiver_Id: receiver_id,
+                            receiverType: receiver_type,
+                            messageId: message.message_id,
+                        },
+                    },
+                });
+                console.log('Notification sent');
+            } catch (error) {
+                console.error("Error sending notification:", error);
+            }
+        };
+
+        if (receiver_type === 'group') {
+            // Récupérer tous les utilisateurs, sauf l'expéditeur
+            const allUsersResult = await db.sql`
+                SELECT external_id 
+                FROM users 
+                WHERE user_id != ${user.id};
+            `;
+
+            if (allUsersResult.rowCount > 0) {
+                const externalIds = allUsersResult.rows.map(row => row.external_id);
+                await sendPushNotification(externalIds, savedMessage, user);
+            }
+        } else if (receiver_type === 'user') {
+            // Récupérer l'ID externe de l'utilisateur destinataire
+            const receiverResult = await db.sql`
+                SELECT external_id
+                FROM users
+                WHERE user_id = ${receiver_id};
+            `;
+
+            if (receiverResult.rowCount > 0) {
+                const receiverExternalId = receiverResult.rows[0].external_id;
+                await sendPushNotification([receiverExternalId], savedMessage, user);
+            } else {
+                return response.status(404).json({ error: "Receiver not found." });
+            }
+        }*/
+
 
     } catch (error) {
         console.error("Error in /api/envoyerMessage:", error);

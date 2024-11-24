@@ -3,7 +3,7 @@ import { Box, Typography, Divider } from '@mui/joy';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../store';
-import { setUsers, setRooms, setSelectedUser, setSelectedRoom } from '../features/usersSlice';
+import { setUsers, setRooms, setSelectedUser, setSelectedRoom, setSelectedUserRomm } from '../features/usersSlice';
 import { User, Room } from '../model/common';
 
 // Define the props interface
@@ -18,6 +18,7 @@ export default function Sidebar({ onUserSelect, onRoomSelect }: SidebarProps) {
   const { users, rooms } = useSelector((state: RootState) => state.users);
   const { user_id: loggedUserId } = useSelector((state: RootState) => state.auth);
   const token = sessionStorage.getItem('token');
+  const user_id = sessionStorage.getItem('user_id');
 
   useEffect(() => {
     // Fetch users
@@ -32,7 +33,7 @@ export default function Sidebar({ onUserSelect, onRoomSelect }: SidebarProps) {
       .then((data) => {
         if (Array.isArray(data)) {
           console.log(loggedUserId);
-          const filteredUsers = data.filter((user: User) => user.user_id.toString() !== loggedUserId);
+          const filteredUsers = data.filter((user: User) => user.user_id.toString() !== user_id);
           dispatch(setUsers(filteredUsers));
         } else {
           console.error('Invalid users data structure', data);
@@ -61,18 +62,18 @@ export default function Sidebar({ onUserSelect, onRoomSelect }: SidebarProps) {
 
   const handleUserClick = (user: User) => {
     dispatch(setSelectedUser(user));
-    dispatch(setSelectedRoom(null)); // Deselect room
-    onUserSelect(user); // Call the prop function
-    //navigate(`/messaging/user/${user.user_id}`);
+    dispatch(setSelectedRoom(null)); // Clear selected room
+    dispatch(setSelectedUserRomm(true)); // Conversation utilisateur
+    onUserSelect(user); // Callback optionnel
   };
-
+  
   const handleRoomClick = (room: Room) => {
     dispatch(setSelectedRoom(room));
-    dispatch(setSelectedUser(null)); // Deselect user
-    onRoomSelect(room); // Call the prop function
-   // navigate(`/messaging/room/${room.room_id}`);
+    dispatch(setSelectedUser(null)); // Clear selected user
+    dispatch(setSelectedUserRomm(false)); // Conversation salon
+    onRoomSelect(room); // Callback optionnel
   };
-
+  
   return (
     <Box
       sx={{
@@ -100,8 +101,9 @@ export default function Sidebar({ onUserSelect, onRoomSelect }: SidebarProps) {
       </Box>
 
       {/* Users Section */}
+{/* Users Section */}
       <Box sx={{ p: 2, flex: 1, overflowY: 'auto' }}>
-        <Typography component="h6" sx={{ mb: 2 }}>
+        <Typography component="h6" sx={{ mb: 3, fontSize: '1.25rem', fontWeight: '600' }}>
           Users
         </Typography>
         {users.length > 0 ? (
@@ -113,9 +115,15 @@ export default function Sidebar({ onUserSelect, onRoomSelect }: SidebarProps) {
                 alignItems: 'center',
                 mb: 2,
                 cursor: 'pointer',
-                p: 1,
-                borderRadius: 'md',
-                '&:hover': { bgcolor: 'neutral.softBg' },
+                p: 2,
+                borderRadius: 'lg',
+                boxShadow: 2,
+                transition: 'transform 0.3s, box-shadow 0.3s',
+                '&:hover': {
+                  transform: 'scale(1.03)',
+                  boxShadow: 4,
+                  bgcolor: 'neutral.softBg',
+                },
               }}
               onClick={() => handleUserClick(user)}
             >
@@ -124,16 +132,17 @@ export default function Sidebar({ onUserSelect, onRoomSelect }: SidebarProps) {
                 src={`https://placehold.co/200x200?text=${user.username.charAt(0)}`}
                 alt={user.username}
                 sx={{
-                  width: 48,
-                  height: 48,
+                  width: 50,
+                  height: 50,
                   borderRadius: '50%',
                   bgcolor: 'neutral.400',
                   mr: 2,
+                  objectFit: 'cover',
                 }}
               />
               <Box>
-                <Typography>{user.username}</Typography>
-                <Typography component="span" sx={{ color: 'text.secondary' }}>
+                <Typography sx={{ fontWeight: 500 }}>{user.username}</Typography>
+                <Typography component="span" sx={{ color: 'text.secondary', fontSize: '0.875rem' }}>
                   {user.last_login || 'No recent message'}
                 </Typography>
               </Box>
@@ -148,7 +157,7 @@ export default function Sidebar({ onUserSelect, onRoomSelect }: SidebarProps) {
         <Divider sx={{ my: 2 }} />
 
         {/* Rooms Section */}
-        <Typography component="h6" sx={{ mb: 2 }}>
+        <Typography component="h6" sx={{ mb: 3, fontSize: '1.25rem', fontWeight: '600' }}>
           Rooms
         </Typography>
         {rooms.length > 0 ? (
@@ -160,16 +169,22 @@ export default function Sidebar({ onUserSelect, onRoomSelect }: SidebarProps) {
                 alignItems: 'center',
                 mb: 2,
                 cursor: 'pointer',
-                p: 1,
-                borderRadius: 'md',
-                '&:hover': { bgcolor: 'neutral.softBg' },
+                p: 2,
+                borderRadius: 'lg',
+                boxShadow: 2,
+                transition: 'transform 0.3s, box-shadow 0.3s',
+                '&:hover': {
+                  transform: 'scale(1.03)',
+                  boxShadow: 4,
+                  bgcolor: 'neutral.softBg',
+                },
               }}
               onClick={() => handleRoomClick(room)}
             >
               <Box
                 sx={{
-                  width: 48,
-                  height: 48,
+                  width: 50,
+                  height: 50,
                   borderRadius: '50%',
                   bgcolor: 'neutral.400',
                   mr: 2,
@@ -179,13 +194,14 @@ export default function Sidebar({ onUserSelect, onRoomSelect }: SidebarProps) {
                   fontWeight: 'bold',
                   color: 'white',
                   backgroundColor: '#007bff',
+                  fontSize: '1.25rem',
                 }}
               >
                 {room.name.charAt(0)}
               </Box>
               <Box>
-                <Typography>{room.name}</Typography>
-                <Typography component="span" sx={{ color: 'text.secondary' }}>
+                <Typography sx={{ fontWeight: 500 }}>{room.name}</Typography>
+                <Typography component="span" sx={{ color: 'text.secondary', fontSize: '0.875rem' }}>
                   {room.created_on || 'No description'}
                 </Typography>
               </Box>
@@ -197,6 +213,7 @@ export default function Sidebar({ onUserSelect, onRoomSelect }: SidebarProps) {
           </Typography>
         )}
       </Box>
+
     </Box>
   );
 }

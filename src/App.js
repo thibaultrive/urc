@@ -3,6 +3,7 @@ import './App.css';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import store from './store';
+import Notifications from './user/Notification'; // Importer Notifications
 
 // Dynamically import components
 const Login = lazy(() => import('./user/Login'));
@@ -17,7 +18,18 @@ const RequireAuth = ({ isAuthenticated }) => {
 function App() {
   const isAuthenticated = !!sessionStorage.getItem('token'); // Check if the user is logged in
 
+
+  window.Notification.requestPermission().then((permission) => {
+    if (permission === 'granted') {
+      console.log("Notifications autorisées");
+    } else {
+      console.log("Notifications non autorisées");
+    }
+  });
+
+
   return (
+   // <Notifications> {/* Notifications doit envelopper toute l'application */}
     <BrowserRouter>
       <Provider store={store}>
         <Suspense fallback={<div>Loading...</div>}>
@@ -30,6 +42,7 @@ function App() {
         </Suspense>
       </Provider>
     </BrowserRouter>
+    //     </Notifications>
   );
 }
 

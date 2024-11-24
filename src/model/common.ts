@@ -31,7 +31,8 @@ export interface UsersState {
     users: User[];
     rooms: Room[];
     selectedUser: User | null;
-    selectedRoom: Room | null; // Add this line
+    selectedRoom: Room | null; 
+    selectedUserRomm: boolean | null// Add this line
   }
   
 

@@ -6,7 +6,8 @@ const initialState: UsersState = {
   users: [],
   rooms: [],
   selectedUser: null,
-  selectedRoom: null, // Add this to the initial state
+  selectedRoom: null,
+  selectedUserRomm: null  // Add this to the initial state
 };
 
 const usersSlice = createSlice({
@@ -21,14 +22,25 @@ const usersSlice = createSlice({
     },
     setSelectedUser: (state, action: PayloadAction<User | null>) => {
       state.selectedUser = action.payload;
-      state.selectedRoom = null; // Clear selected room when a user is selected
+      if (action.payload) {
+        state.selectedRoom = null; // Clear selected room when a user is selected
+    }
     },
     setSelectedRoom: (state, action: PayloadAction<Room | null>) => {
+      console.log('Selected Room:', action.payload);
       state.selectedRoom = action.payload;
-      state.selectedUser = null; // Clear selected user when a room is selected
-    },
+      if (action.payload) {
+        state.selectedUser = null; // Clear selected user when a room is selected
+    }
+  },
+    setSelectedUserRomm: (state, action: PayloadAction<boolean | null>) => {
+      state.selectedUserRomm = action.payload;
+
+  },
+  
+    
   },
 });
 
-export const { setUsers, setRooms, setSelectedUser, setSelectedRoom } = usersSlice.actions;
+export const { setUsers, setRooms, setSelectedUser, setSelectedRoom, setSelectedUserRomm } = usersSlice.actions;
 export default usersSlice.reducer;
