@@ -103,7 +103,7 @@ Déroulé du service login :
 
 ### ✏️ Let's get started
 
-- Mettre en place un store : Redux Toolkit ou Recoil (par pitié, pas de Redux sans Toolkit)
+- Mettre en place un store : Redux Toolkit ou Zustand (par pitié, pas de Redux sans Toolkit)
 - Intégrer `React Router` et déplacer le formulaire de connexion sur une page dédiée
 - Ajouter la lib UX de votre choix ([comparatif 1](https://dev.to/fredy/top-5-reactjs-ui-components-libraries-for-2023-4673),
   [comparatif 2](https://www.wearedevelopers.com/magazine/best-free-react-ui-libraries#toc-5)) afin d'avoir du style ✨
@@ -298,9 +298,6 @@ Discuter à 2, c'est bien ; en groupe, c'est mieux !
 - Permettre l'envoi d'un message sur un salon
 - Afficher la liste des messages d'un salon
 - Gérer les notifications push à l'ensemble des membres d'un groupe
-- Ajouter un bouton pour créer un nouveau groupe
-- Super bonus : gérer des groupes privés ne pouvant être consultés que par les utilisateurs autorisés par le créateur du groupe.
-- Super bonus 2 : afficher le nombre de messages non lu au niveau de la liste des utilisateurs et des salons.
 
 <p>&nbsp;</p>
 
