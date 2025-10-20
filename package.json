@@ -10,15 +10,16 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/crypto-js": "^4.1.3",
-    "@vercel/edge": "^1.1.0",
-    "@upstash/redis": "^1.34.3",
-    "@vercel/postgres": "^0.5.0",
+    "@upstash/redis": "^1.35.5",
+    "@vercel/edge": "^1.2.2",
+    "@vercel/postgres": "^0.10.0",
     "crypto-js": "^4.2.0",
     "pusher-js": "^8.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",
     "react-scripts": "5.0.1",
+    "vercel": "^48.4.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -26,12 +27,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -48,6 +43,10 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
+    "@vercel/edge": "^1.2.2",
+    "@vercel/kv": "^3.0.0",
+    "@vercel/node": "^5.3.26",
+    "@vercel/postgres": "^0.10.0",
     "eslint": "^8.27.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-jsx": "^0.1.0",
