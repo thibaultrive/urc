@@ -1,5 +1,7 @@
 # UBO Relay Chat
 
+[Lien du cours](https://docs.google.com/presentation/d/1p-KtmWjFnfrZP-NrXgGACX2TSRNJXMdJ)
+
 ## Objectifs
 
 Créer une application de messagerie type IRC / WhatApp : [démo](https://urc.vercel.app/)
