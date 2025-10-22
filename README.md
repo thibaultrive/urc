@@ -38,9 +38,12 @@ Pour réaliser ce TP, nous allons utiliser la plateforme [vercel](https://vercel
 - Charger les variables d'environnement : `export $(cat .env.development.local | xargs)`
 - Installer les dépendances du projet : `npm install` ou `yarn install`
 
-Le projet peut à présent être exécuté en local, en se connectant au cache et la base de données distante,
-avec la commande `vercel dev` 🎉
+ 
+> [!CAUTION]
+> Le projet **ne peut pas** être lancé avec la commande `npm run start` ou `npm run dev` car celle-ci ne lancerait que l'application React et pas les fonctions Serveless utilisées pour se connecter à la base de données et au cache.  
+> 🚀 Pour lancer le projet, il faut utiliser la commande `vercel dev`
 
+ 
 La requête présente dans le fichier [scripts/db.sql](scripts/db.sql) permet d'initialiser un utilisateur `test / testubo`.
 Si tout est bon, il devrait permettre de se connecter sur l'ébauche de formulaire fourni.
 

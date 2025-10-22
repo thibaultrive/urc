@@ -18,15 +18,13 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.4",
-    "react-scripts": "5.0.1",
     "vercel": "^48.4.1",
     "web-vitals": "^5.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "browserslist": {
     "production": [
@@ -48,6 +46,7 @@
     "@vercel/kv": "^3.0.0",
     "@vercel/node": "^5.4.1",
     "@vercel/postgres": "^0.10.0",
+    "@vitejs/plugin-react": "^5.0.4",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-react-app": "^7.0.1",
@@ -55,6 +54,7 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "react-snap": "^1.23.0",
-    "typescript": "^4"
+    "typescript": "^4",
+    "vite": "^7.1.11"
   }
 }
