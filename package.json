@@ -39,22 +39,22 @@
     ]
   },
   "devDependencies": {
-    "@types/react": "^19.2.2",
-    "@typescript-eslint/eslint-plugin": "^5.5.0",
-    "@typescript-eslint/parser": "^5.5.0",
+    "@eslint/js": "^9.36.0",
+    "@types/node": "^24.9.1",
     "@vercel/edge": "^1.2.2",
     "@vercel/kv": "^3.0.0",
-    "@vercel/node": "^5.4.1",
+    "@vercel/node": "^5.3.26",
     "@vercel/postgres": "^0.10.0",
     "@vitejs/plugin-react": "^5.0.4",
-    "eslint": "^8.57.1",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-react-app": "^7.0.1",
-    "eslint-plugin-jsx": "^0.1.0",
+    "eslint": "^9.36.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-react": "^7.37.5",
-    "react-snap": "^1.23.0",
-    "typescript": "^4",
-    "vite": "^7.1.11"
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.22",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.45.0",
+    "vite": "npm:rolldown-vite@7.1.14"
+  },
+  "overrides": {
+    "vite": "npm:rolldown-vite@7.1.14"
   }
 }

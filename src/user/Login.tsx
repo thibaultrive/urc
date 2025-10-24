@@ -1,6 +1,6 @@
-import {useState} from "react";
+import {React, useState} from "react";
 import {loginUser} from "./loginApi";
-import {Session} from "../model/common";
+import type {Session} from "../model/common";
 import {CustomError} from "../model/CustomError";
 
 export function Login() {

@@ -84,7 +84,7 @@ Avant de passer à la suite, lire la note sur la [gestion du mot de passe](#mdp)
 <a id="session"></a>
 Contrairement à ce que vous avez peut-être déjà rencontré sur d'autres framework, ici la session utilisateur n'est pas gérée comme par magie
 via des cookies, JSESSIONID ou autre.<br/>
-Nous allons utiliser le schéma [Bearer Authentication](https://swagger.io/docs/specification/v3_0/authentication/bearer-authentication/) : 
+Nous allons utiliser le schéma [Bearer Authorization](https://swagger.io/docs/specification/v3_0/authentication/bearer-authentication/) : 
 ce sera à vous de gérer la persistance, au niveau du navigateur, du token de session récupéré lors de la connexion ; et d'envoyer ce token
 en header de chaque requête, sous la forme `Authorization: Bearer <token>`, afin de pouvoir valider la connexion de l'utilisateur au niveau
 des services API.
@@ -102,7 +102,7 @@ Déroulé du service login :
 - On stocke les infos de l'utilisateur en cache dans une Map indexée par son identifiant (peut être utile dans la suite du TP 😉).
 - Pour finir, on retourne le token en réponse.
 - 🚨 Ce token est à enregistrer au niveau de l'application React et il devra être envoyé lors de chaque
-  appel API comme preuve de la connexion de l'utilisateur, sous la forme d'un header : `Authentication: Bearer le_token_reçu`.
+  appel API comme preuve de la connexion de l'utilisateur, sous la forme d'un header : `Authorization: Bearer le_token_reçu`.
   Le fichier [lib/session.js](lib/session.js) contient une fonction `checkSession()` permettant aux services API de vérifier que l'utilisateur est bien connecté et qu'il a le droit d'appeler ce service.
 
 
@@ -222,7 +222,7 @@ Instancier et configurer le client :
 const beamsTokenProvider = new TokenProvider({
     url: "/api/beams",
     headers: {
-        Authentication: "Bearer " + TOKEN_SESSION, // Headers your auth endpoint needs
+        Authorization: "Bearer " + TOKEN_SESSION, // Headers your auth endpoint needs
     },
 });
 

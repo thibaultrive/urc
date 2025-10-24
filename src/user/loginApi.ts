@@ -1,4 +1,4 @@
-import {Session, SessionCallback, ErrorCallback, User} from "../model/common";
+import type {Session, SessionCallback, ErrorCallback, User} from "../model/common";
 import {CustomError} from "../model/CustomError";
 
 export function loginUser(user: User, onResult: SessionCallback, onError: ErrorCallback) {

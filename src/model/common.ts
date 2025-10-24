@@ -1,6 +1,6 @@
 import {CustomError} from "./CustomError";
 
-export const AUTHENT_HEADER = "Authentication";
+export const AUTHENT_HEADER = "Authorization";
 export const BEARER = "Bearer ";
 
 export interface User {
